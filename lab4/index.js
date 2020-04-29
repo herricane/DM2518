@@ -4,6 +4,7 @@ const talkSub = document.getElementById("talksub");
 talkSub.addEventListener('click', () => { submitUpdate(talkWords.value) })
 
 var orientation = 0;
+
 function givePermission() {
   // feature detect
   if (typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -15,18 +16,22 @@ function givePermission() {
       })
       .catch(console.error);
   } else {
-    // just serve up the EventListener w/o permissions here
+    // handle regular non iOS 13+ devices
     window.addEventListener('deviceorientation', handleOrientation, true);
+
   }
 }
-function handleOrientation(event) {
+
+function handleOrientation(event)
+{
   var heading = event.alpha;
-  // some browsers don't understand "alpha"
+
   if (typeof event.webkitCompassHeading !== "undefined") {
-    heading = event.webkitCompassHeading;
-  }
-  // orientation = heading.toFixed([0]);
+     heading = event.webkitCompassHeading;
+   }
+
   document.getElementById("heading").innerHTML = heading.toFixed([0]);
+  orientation = heading.toFixed([0]);
 }
 
 const pubnubDemo = new PubNub({
@@ -37,8 +42,8 @@ const pubnubDemo = new PubNub({
 pubnubDemo.addListener({
   message: function (event) {
     let update = event.message.update;
-    let dir = event.message.orientation;
-    if ((dir - orientation) % 360 < 45) {
+    let dir = event.orientation;
+    if (((dir - orientation) % 360) < 45) {
       let str = '<div class="atalk"><span>' + update + '</span></div>';
       words.innerHTML = words.innerHTML + str;
     }
@@ -54,7 +59,8 @@ submitUpdate = function (update) {
   }
   pubnubDemo.publish({
     channel: 'demo_tutorial',
-    message: { 'update': update, 'orientation': orientation }
+    message: { 'update': update },
+    orientation: orientation
   }, function () {
     let str = '<div class="btalk"><span>' + update + '</span></div>';
     words.innerHTML = words.innerHTML + str;
