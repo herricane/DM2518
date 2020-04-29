@@ -42,7 +42,7 @@ const pubnubDemo = new PubNub({
 pubnubDemo.addListener({
   message: function (event) {
     let update = event.message.update;
-    let dir = event.orientation;
+    let dir = event.message.orientation;
     if (((dir - orientation) % 360) < 45) {
       let str = '<div class="atalk"><span>' + update + '</span></div>';
       words.innerHTML = words.innerHTML + str;
@@ -59,8 +59,10 @@ submitUpdate = function (update) {
   }
   pubnubDemo.publish({
     channel: 'demo_tutorial',
-    message: { 'update': update },
-    orientation: orientation
+    message: { 
+      'update': update, 
+      'orientation': orientation 
+    }
   }, function () {
     let str = '<div class="btalk"><span>' + update + '</span></div>';
     words.innerHTML = words.innerHTML + str;
