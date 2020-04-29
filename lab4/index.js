@@ -1,7 +1,7 @@
 const Words = document.getElementById("words");
 const TalkWords = document.getElementById("talkwords");
 const TalkSub = document.getElementById("talksub");
-TalkSub.addEventListener('click', () => {submitUpdate(TalkWords.value)})
+TalkSub.addEventListener('click', () => { submitUpdate(TalkWords.value) })
 
 const pubnubDemo = new PubNub({
   publishKey: 'pub-c-b931c396-73b9-4718-8c6b-4571e7959567',
@@ -10,7 +10,8 @@ const pubnubDemo = new PubNub({
 
 pubnubDemo.addListener({
   message: function (event) {
-    let str = '<div class="atalk"><span>' + event.message.update + '</span></div>';
+    let update = event.message.update;
+    let str = '<div class="atalk"><span>' + update + '</span></div>';
     Words.innerHTML = Words.innerHTML + str;
   }
 })
@@ -18,6 +19,10 @@ pubnubDemo.addListener({
 pubnubDemo.subscribe({ channels: ['demo_tutorial'] });
 
 submitUpdate = function (update) {
+  if (update === "") {
+    alert("Message can't be empty.");
+    return;
+  }
   pubnubDemo.publish({
     channel: 'demo_tutorial',
     message: { 'update': update }
