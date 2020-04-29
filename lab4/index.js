@@ -3,8 +3,6 @@ const talkWords = document.getElementById("talkwords");
 const talkSub = document.getElementById("talksub");
 talkSub.addEventListener('click', () => { submitUpdate(talkWords.value) })
 
-var orientation = 0;
-
 function givePermission() {
   // feature detect
   if (typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -27,8 +25,7 @@ function handleOrientation(event)
   if (typeof event.webkitCompassHeading !== "undefined") {
      heading = event.webkitCompassHeading;
    }
-  orientation = parseInt(heading.toFixed([0]));
-  document.getElementById("heading").innerHTML = orientation;
+  document.getElementById("heading").innerHTML = heading.toFixed([0]);
 }
 
 const pubnubDemo = new PubNub({
@@ -39,6 +36,7 @@ const pubnubDemo = new PubNub({
 pubnubDemo.addListener({
   message: function (event) {
     let update = event.message.update;
+    let orientation = parseInt(document.getElementById("heading").innerHTML);
     let dir = parseInt(event.message.orientation);
     if (((dir - orientation) % 360) < 45) {
       let str = '<div class="atalk"><span>' + update
@@ -61,11 +59,11 @@ submitUpdate = function (update) {
     channel: 'demo_tutorial',
     message: { 
       'update': update, 
-      'orientation': orientation 
+      'orientation': document.getElementById("heading").innerHTML 
     }
   }, function () {
     let str = '<div class="btalk"><span>' + update + '</span></div>';
     words.innerHTML = words.innerHTML + str;
-    talkWords.value = ""
+    talkWords.value = "";
   })
 }
