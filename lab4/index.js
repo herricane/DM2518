@@ -25,7 +25,7 @@ function handleOrientation(event) {
   if (typeof event.webkitCompassHeading !== "undefined") {
     heading = event.webkitCompassHeading;
   }
-  orientation = heading.toFixed([0]);
+  // orientation = heading.toFixed([0]);
   document.getElementById("heading").innerHTML = heading.toFixed([0]);
 }
 
