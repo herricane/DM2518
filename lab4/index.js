@@ -18,20 +18,17 @@ function givePermission() {
   } else {
     // handle regular non iOS 13+ devices
     window.addEventListener('deviceorientation', handleOrientation, true);
-
   }
 }
 
 function handleOrientation(event)
 {
   var heading = event.alpha;
-
   if (typeof event.webkitCompassHeading !== "undefined") {
      heading = event.webkitCompassHeading;
    }
-
   document.getElementById("heading").innerHTML = heading.toFixed([0]);
-  orientation = heading.toFixed([0]);
+  orientation = parseInt(heading.toFixed([0]));
 }
 
 const pubnubDemo = new PubNub({
@@ -42,7 +39,7 @@ const pubnubDemo = new PubNub({
 pubnubDemo.addListener({
   message: function (event) {
     let update = event.message.update;
-    let dir = event.message.orientation;
+    let dir = parseInt(event.message.orientation);
     if (((dir - orientation) % 360) < 45) {
       let str = '<div class="atalk"><span>' + update + '</span></div>';
       words.innerHTML = words.innerHTML + str;
