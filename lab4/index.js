@@ -26,6 +26,7 @@ function handleOrientation(event) {
     heading = event.webkitCompassHeading;
   }
   orientation = heading.toFixed([0]);
+  document.getElementById("heading").innerHTML = orientation;
 }
 
 const pubnubDemo = new PubNub({
