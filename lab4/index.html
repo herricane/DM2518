@@ -10,6 +10,10 @@
 </head>
 
 <body>
+  <div class="orientation">
+    <input type="button" value="Allow Orientation" onClick="givePermission();" style="padding:0 70px;"/>
+    <span id="heading">n/a</span>
+  </div>
   <div class="talk_con">
     <div class="talk_show" id="words">
       <div class="atalk"><span id="asay">How are you doing?</span></div>
@@ -20,8 +24,6 @@
       <input type="submit" value="Send" class="talk_sub" id="talksub">
     </div>
   </div>
-  <input type="button" value="Ok to see orientation" onClick="givePermission();" />
-  <p id="heading">n/a</p>
   <script type="text/javascript" src="index.js"></script>
 </body>
 
