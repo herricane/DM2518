@@ -38,8 +38,12 @@ pubnubDemo.addListener({
     let update = event.message.update;
     let orientation = parseInt(document.getElementById("heading").innerHTML);
     let dir = parseInt(event.message.orientation);
-    if (((dir - orientation) % 360) < 45) {
-      let str = '<div class="atalk"><span>' + update + '</span></div>';
+    let diff = Math.abs(dir - orientation);
+    if ((diff < 180 ? diff : 360 - diff) < 45) {
+      let str = '<div class="atalk"><span>' + update 
+      + '<br />' + dir
+      + '<br />' + orientation
+      + '</span></div>';
       words.innerHTML = words.innerHTML + str;
     }
   }
