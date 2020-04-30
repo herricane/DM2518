@@ -39,8 +39,7 @@ pubnubDemo.addListener({
     let orientation = parseInt(document.getElementById("heading").innerHTML);
     let dir = parseInt(event.message.orientation);
     if (((dir - orientation + 360) % 360) < 45) {
-      let str = '<div class="atalk"><span>' + update + '</span></div>'
-      +'<br>'+dir+'<br>'+orientation;
+      let str = '<div class="atalk"><span>' + update + '</span>' + '<br>'+dir+'<br>'+orientation+'</div>';
       words.innerHTML = words.innerHTML + str;
     }
   }
