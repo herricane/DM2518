@@ -38,9 +38,18 @@ pubnubDemo.addListener({
     let update = event.message.update;
     let orientation = parseInt(document.getElementById("heading").innerHTML);
     let dir = parseInt(event.message.orientation);
+<<<<<<< HEAD
     let ans = Math.abs(dir-orientation)>180? 360-Math.abs(dir-orientation):Math.abs(dir-orientation);
     if (ans < 45) {
       let str = '<div class="atalk"><span>' + update +'<br>'+dir+"  "+orientation + '</span>' +'</div>';
+=======
+    let diff = Math.abs(dir - orientation);
+    if ((diff < 180 ? diff : 360 - diff) < 45) {
+      let str = '<div class="atalk"><span>' + update 
+      + '<br />' + dir
+      + '<br />' + orientation
+      + '</span></div>';
+>>>>>>> 2188bcb247083a89a5d09548f6c7301c4fc6e548
       words.innerHTML = words.innerHTML + str;
     }
   }
