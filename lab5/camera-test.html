@@ -47,24 +47,26 @@
   <!-- A button for taking snaps -->
   <div id="my_camera">
   </div><br>
-  <input type=button value="Take Snapshot" onClick="take_snapshot()">
-  <br>
+  <!-- <button onclick="take_snapshot()">take snapshot</button> -->
   <div id="results"></div>
-  <div id="return"></div>
+  <div id="return_img"></div>
+  <div id="return_json"></div>
 
   <script type="text/javascript" src="js/webcam.min.js"></script>
   <script language="JavaScript">
 
     const client = new Paho.MQTT.Client("ws://test.mosquitto.org:8080/", "uniqueID" + new Date().getTime());
-    const myPTopic = "kth/dm2518/yolo3/ronghua/imgb64";
-    const myTopic = "kth/dm2518/reply/yolo3/ronghua/imgb64";
+    const myPTopic = "kth/dm2518/yolo3/ronghua666/imgb64";
+    const myJSONTopic = "kth/dm2518/reply/yolo3/ronghua666/json";
+    const myImgTopic = "kth/dm2518/reply/yolo3/ronghua666/imgb64";
     client.onMessageArrived = onMessageArrived;
     client.onConnectionLost = onConnectionLost;
     client.connect({ onSuccess: onConnect });
 
     function onConnect() {
-      console.log("connection successful")
-      client.subscribe(myTopic)   //subscribe to our topic
+      console.log("connection successful");
+      client.subscribe(myJSONTopic);  //subscribe to our topic
+      client.subscribe(myImgTopic);
     }
 
     const publish = (topic, msg) => {  //takes topic and message string
@@ -81,14 +83,18 @@
     }
 
     function onMessageArrived(message) {
-      console.log("Got message on topic " + message.destinationName + " with payload: " + message.payloadString);
-      // let el= document.createElement('div')
-      // el.innerHTML = message.payloadString
-      // document.body.appendChild(el)
-      document.getElementById('return').innerHTML =
-        '<h2>Processed image is:</h2>' +
-        '<img src="' + message.payloadString + '"/>';
-
+      if (message.destinationName === myImgTopic) {
+        document.getElementById('return_img').innerHTML =
+          '<h2>Processed image is:</h2>' +
+          '<img src="' + message.payloadString + '"/>';
+      }
+      if (message.destinationName === myJSONTopic) {
+        var jsonfile = message.payloadString;
+        document.getElementById('return_json').innerHTML =
+          '<h2>Processed JSON is:</h2>' +
+          '<p>' + jsonfile + '</p>';
+        detect(jsonfile);
+      }
     }
 
     function take_snapshot() {
@@ -102,6 +108,15 @@
       });
     }
 
+    setInterval("take_snapshot()", "5000");
+
+    function detect(str) {
+      let personIdx = str.indexOf('person');
+      if (personIdx != -1) {
+        speak('warning! intruder detected!');
+      }
+    }
+
     Webcam.set({
       width: 320,
       height: 240,
@@ -109,6 +124,10 @@
       jpeg_quality: 90
     });
     Webcam.attach('#my_camera');
+
+    function speak(text) {
+      speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+    }
 
   </script>
 
