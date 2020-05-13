@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        body {
+            display: none;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    I'm part of the body
+</body>
+<script>
+    $('html')
+        .append('<img alt="splash" src="https://c4.wallpaperflare.com/wallpaper/5/168/847/digital-art-portrait-display-cgi-space-wallpaper-preview.jpg" class="onLoad" style="width: 100%">');
+
+    $('.onLoad').delay(3000).fadeOut(1000, function () {
+        $('body').fadeIn(1000);
+    })
+</script>
+
+</html>
+

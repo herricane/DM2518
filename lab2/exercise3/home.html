@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    const loadPage = (page) => {
+      document.querySelector('#navigator').bringPageTop(page, {animation: 'slide'});
+    };
+  </script>
+  <title>Home</title>
+</head>
+
+<body>
+  <ons-navigator id="navigator">
+    <ons-page id="home">
+      <ons-toolbar id="home-toolbar"style="background-color:red;" >
+        <div class="left"  ></div>
+        <div class="center" >Relaxation</div>
+        <div class="right">
+          <ons-button modifier="large" onclick="loadPage('about.html')">
+            About
+          </ons-button>
+        </div>
+      </ons-toolbar>
+
+      <ons-list id="home-list" style="font-size:x-large;">
+        <ons-list-header>Feet</ons-list-header>
+        <ons-list-item modifier="nodivider" onclick="loadPage('rel1.html')" style="background-color: antiquewhite;padding: 10px 3%; " >
+          Feel Your Feet
+        </ons-list-item>
+        <ons-list-header>Shoulders</ons-list-header>
+        <ons-list-item modifier="nodivider" onclick="loadPage('rel2.html')" style="background-color: antiquewhite;padding: 10px 3%; ">
+          Feel Your Shoulders
+        </ons-list-item>
+        <ons-list-header>Face</ons-list-header>
+        <ons-list-item modifier="nodivider" onclick="loadPage('rel3.html')" style="background-color: antiquewhite;padding: 10px 3%; ">
+          Feel Your Face
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-navigator>
+</body>

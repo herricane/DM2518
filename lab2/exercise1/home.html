@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    const loadPage = (page) => {
+      document.querySelector('#navigator').bringPageTop(page, {animation: 'slide'});
+    };
+  </script>
+  <style>
+    .rel-content {
+      padding-right: 5%;
+    }
+    .rel-image img {
+      max-width: 1200px;
+      width: 100%; 
+      height: auto;
+    }
+  </style>
+  <title>Home</title>
+</head>
+
+<body>
+  <ons-navigator id="navigator">
+    <ons-page id="home">
+      <ons-toolbar id="home-toolbar">
+        <div class="center">Relaxation</div>
+        <div class="right">
+          <ons-toolbar-button onclick="loadPage('about.html')">
+            About
+          </ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+
+      <ons-list id="home-list">
+        <ons-list-item onclick="loadPage('rel1.html')" modifier="tappable chevron">
+          Feel Your Feet
+        </ons-list-item>
+        <ons-list-item onclick="loadPage('rel2.html')" modifier="tappable chevron">
+          Feel Your Shoulders
+        </ons-list-item>
+        <ons-list-item onclick="loadPage('rel3.html')" modifier="tappable chevron">
+          Feel Your Face
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-navigator>
+</body>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    document.addEventListener('prechange', ({ target, tabItem }) => {
+      if (target.matches('#tabbar')) {
+        let label = tabItem.getAttribute('label');
+        document.querySelector('#home-toolbar .center').innerHTML = (label === "About") ? (label) : ("Feel Your " + label);
+      }
+    });
+  </script>
+  <style>
+    .rel-content {
+      padding-right: 5%;
+    }
+    .rel-image img {
+      max-width: 1200px;
+      width: 100%; 
+      height: auto;
+    }
+  </style>
+  <title>Home</title>
+</head>
+
+<body>
+
+  <ons-page id="home">
+    <ons-toolbar id="home-toolbar">
+      <div class="center">About</div>
+    </ons-toolbar>
+
+    <ons-tabbar id="tabbar" swipeable modifier="autogrow">
+      <ons-tab page="about.html" label="About">
+        <ons-icon icon="fa-exclamation"></ons-icon>
+      </ons-tab>
+      <ons-tab page="rel1.html" label="Feet">
+        <ons-icon icon="fa-shoe-prints"></ons-icon>
+      </ons-tab>
+      <ons-tab page="rel2.html" label="Shoulders">
+        <ons-icon icon="fa-user-alt"></ons-icon>
+      </ons-tab>
+      <ons-tab page="rel3.html" label="Face">
+        <ons-icon icon="fa-smile-wink"></ons-icon>
+      </ons-tab>
+    </ons-tabbar>
+  </ons-page>
+
+</body>

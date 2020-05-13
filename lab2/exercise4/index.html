@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    .rel-content {
+      padding-right: 5%;
+    }
+    .rel-image img {
+      max-width: 1200px;
+      width: 100%; 
+      height: auto;
+    }
+  </style>
+  <script>
+    const loadPage = (page) => {
+      document.querySelector('#menu').close();
+      document.querySelector('#navigator').bringPageTop(page);
+    };
+  </script>
+  <title>Home</title>
+</head>
+
+<body>
+  <ons-splitter>
+    <ons-splitter-side id="menu" collapse width="220px">
+      <ons-page>
+        <ons-list>
+          <ons-list-item onclick="loadPage('about.html')">
+            About
+          </ons-list-item>
+        </ons-list>
+      </ons-page>
+    </ons-splitter-side>
+
+    <ons-splitter-content>
+      <ons-navigator id="navigator" page="home.html" swipeable></ons-navigator>
+    </ons-splitter-content>
+  </ons-splitter>
+</body>
+</html>

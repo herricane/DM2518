@@ -1,0 +1,25 @@
+<ons-page id="home">
+  <script>
+    const openMenu = () => {
+      document.querySelector('#menu').open();
+    };
+  </script>
+
+  <ons-toolbar id="home-toolbar">
+    <div class="center">Relaxation</div>
+    <div class="left">
+      <ons-toolbar-button onclick="openMenu()">
+        <ons-icon icon="md-menu"></ons-icon>
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+
+  <ons-tabbar id="tabbar" swipeable>
+    <ons-tab page="practices.html" label="Practices">
+      <ons-icon icon="md-run"></ons-icon>
+    </ons-tab>
+    <ons-tab page="done.html" label="Done">
+      <ons-icon icon="md-check"></ons-icon>
+    </ons-tab>
+  </ons-tabbar>
+</ons-page>

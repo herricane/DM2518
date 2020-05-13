@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      display: none;
+    }
+
+    .mask {
+      background: #000;
+    }
+
+    .onLoad {
+      opacity: 0.6;
+      filter: alpha(opacity=60);
+    }
+  </style>
+  <title>Lab 1</title>
+</head>
+
+<body>
+  <h1>Lab 1</h1>
+
+  <iframe id="mapFrame" height="400px" width="100%" frameborder="0" scrolling="no" src="/map.html" allowfullscreen>
+  </iframe>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <div class="dropdown">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" id="ddButton">
+            Map Type
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href='#' id="RoadMap" onclick="changeName('RoadMap');setRoadMap()">RoadMap</a>
+            <a class="dropdown-item" href="#" id="Satellite"
+              onclick="changeName('Satellite');setSatellite()">Satellite</a>
+            <a class="dropdown-item" href="#" id="Hybrid" onclick="changeName('Hybrid');setHybrid()">Hybrid</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <input type="image" class="float-right" src="https://img.icons8.com/ios/40/000000/zoom-out.png"
+          onclick="zoomOut()">
+        <input type="image" class="float-right" src="https://img.icons8.com/ios/40/000000/zoom-in.png"
+          onclick="zoomIn()">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 mx-auto">
+        <div style="text-align: center;">
+          <input type="image" src="https://img.icons8.com/ios/40/000000/circled-chevron-up.png" onclick="panNorth()">
+        </div>
+        <div style="text-align: center;">
+          <input type="image" src="https://img.icons8.com/ios/40/000000/circled-chevron-left.png" onclick="panWest()">
+          <input type="image" src="https://img.icons8.com/ios/40/000000/compass.png" onclick="panToCurrent()">
+          <input type="image" src="https://img.icons8.com/ios/40/000000/circled-chevron-right.png" onclick="panEast()">
+        </div>
+        <div style="text-align: center;">
+          <input type="image" src="https://img.icons8.com/ios/40/000000/circled-chevron-down.png" onclick="panSouth()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function panEast() {
+      document.getElementById('mapFrame').contentWindow.panEast();
+    }
+
+    function panWest() {
+      document.getElementById('mapFrame').contentWindow.panWest();
+    }
+
+    function panNorth() {
+      document.getElementById('mapFrame').contentWindow.panNorth();
+    }
+
+    function panSouth() {
+      document.getElementById('mapFrame').contentWindow.panSouth();
+    }
+
+    function panToCurrent() {
+      document.getElementById('mapFrame').contentWindow.panToCurrent();
+    }
+
+    function zoomIn() {
+      document.getElementById('mapFrame').contentWindow.zoomIn();
+    }
+
+    function zoomOut() {
+      document.getElementById('mapFrame').contentWindow.zoomOut();
+    }
+
+    function setRoadMap() {
+      document.getElementById('mapFrame').contentWindow.setRoadMap();
+    }
+
+    function setSatellite() {
+      document.getElementById('mapFrame').contentWindow.setSatellite();
+    }
+
+    function setHybrid() {
+      document.getElementById('mapFrame').contentWindow.setHybrid();
+    }
+
+    function changeName(name) {
+      document.getElementById('ddButton').innerHTML = name;
+    }
+  </script>
+</body>
+<script>
+  $('html')
+    .append(
+      '<div class="mask" style="position: relative;"><img alt = "splash" src = "https://r1.ilikewallpaper.net/iphone-8-wallpapers/download/34019/Space-Sky-Night-Dark-Nature-Bw-iphone-8-wallpaper-ilikewallpaper_com.jpg" class = "onLoad" style = "width: 100%"><span style = "position: absolute; left: 140px; top: 200px; color: white; font-size: 40px;">Lab 1</div>'
+    );
+
+  $('.onLoad').delay(2000).fadeOut(1000, function () {
+    $('body').fadeIn(1000);
+  })
+</script>
+
+</html>

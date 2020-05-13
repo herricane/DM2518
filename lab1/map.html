@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Lab1-Exercise1</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+      height: 100%;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script>
+    var map;
+    var zoom = 13;
+    var markerAni;
+    var locCur;
+    var markerCur = null;
+    var imageSelf = 'https://img.icons8.com/color/30/000000/sweden-circular.png'
+
+    function initMap() {
+      // Coordinates of locations
+      var locationKTH = {
+        lat: 59.3498092,
+        lng: 18.0684758
+      };
+      var locationHome = {
+        lat: 59.381730,
+        lng: 18.021340
+      };
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          locCur = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        alert("An error occurred.");
+      }
+
+      // Initialize a map
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: locationKTH,
+        zoom: zoom,
+        mapTypeId: 'roadmap',
+        mapTypeControlOptions: {
+          mapTypeIds: ['roadmap', 'satellite', 'hybrid'],
+        },
+        gestureHandling: 'none',
+        zoomControl: false,
+        streetViewControl: false,
+        mapTypeControl: false,
+      });
+      map.setTilt(45);
+
+      // Set location info
+      var infoKTH = new google.maps.InfoWindow({
+        content: 'KTH Campus',
+      });
+      var infoDraggable = new google.maps.InfoWindow({
+        content: 'Home',
+      })
+
+      // This is a fixed marker
+      var marker = new google.maps.Marker({
+        position: locationKTH,
+        map: map,
+        title: 'KTH Campus',
+      });
+      // Click to open the info
+      marker.addListener('click', function () {
+        infoKTH.open(map, marker);
+      });
+
+      // This is a draggable marker
+      markerAni = new google.maps.Marker({
+        position: locationHome,
+        map: map,
+        title: 'Draggable',
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+      });
+
+      // Mouseover to bounce
+      markerAni.addListener('mouseover', toggleBounce);
+      markerAni.addListener('click', toggleBounce);
+      markerAni.addListener('click', function () {
+        infoDraggable.open(map, markerAni);
+      })
+      markerAni.addListener('dragstart', function () {
+        infoDraggable.close();
+      })
+      markerAni.addListener('dragend', function () {
+        infoDraggable = new google.maps.InfoWindow({
+          content: '<p>Marker Location: ' + markerAni.getPosition() + '</p>',
+        })
+      })
+      map.addListener('click', function () {
+        infoDraggable.close();
+      })
+
+      // Bounce animation. Only bounce twice. 
+      function toggleBounce() {
+        if (markerAni.getAnimation() == null) {
+          markerAni.setAnimation(google.maps.Animation.BOUNCE);
+          window.setTimeout(function () {
+            markerAni.setAnimation(null);
+          }, 1400);
+        }
+      }
+    }
+
+    function panToCurrent() {
+      if (markerCur != null) {
+        markerCur.setMap(null);
+      }
+      map.panTo(locCur);
+      window.setTimeout(function() {
+        markerCur = new google.maps.Marker({
+          position: locCur,
+          map: map,
+          icon: imageSelf,
+          animation: google.maps.Animation.DROP
+        });
+      }, 400);
+    }
+
+    function panEast() {
+      map.panBy(200, 0);
+    }
+
+    function panWest() {
+      map.panBy(-200, 0);
+    }
+
+    function panSouth() {
+      map.panBy(0, 200);
+    }
+
+    function panNorth() {
+      map.panBy(0, -200);
+    }
+
+    function zoomIn() {
+      zoom = zoom + 1;
+      map.setZoom(zoom);
+    }
+
+    function zoomOut() {
+      zoom = zoom - 1;
+      map.setZoom(zoom);
+    }
+
+    function setRoadMap() {
+      map.setMapTypeId('roadmap');
+    }
+
+    function setSatellite() {
+      map.setMapTypeId('satellite');
+    }
+
+    function setHybrid() {
+      map.setMapTypeId('hybrid');
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYnjFcZGOz8h_-uqjL5-iTbAtF-0aDtxQ&callback=initMap" async defer></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script> -->
+</body>
+
+</html>
